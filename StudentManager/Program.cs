@@ -1,3 +1,4 @@
+using StudentManager.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,10 @@ namespace StudentManager
 {
     class Program
     {
+        static ControllerCenter controllerCenter = new ControllerCenter();
         static void Main(string[] args)
         {
-            ViewInfo.StartingUI();
+            controllerCenter.InfoManagerment();
             Console.ReadKey();
         }
     }

@@ -42,21 +42,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blo\IOData.cs" />
     <Compile Include="Blo\IStudentManagerment.cs" />
+    <Compile Include="Blo\ObjectInOut.cs" />
     <Compile Include="Blo\StudentManagerment.cs" />
     <Compile Include="Controllers\ControllerCenter.cs" />
     <Compile Include="Controllers\StudentControler.cs" />
-    <Compile Include="Model\Class.cs" />
+    <Compile Include="Model\ClassModel.cs" />
+    <Compile Include="Model\DataContext.cs" />
     <Compile Include="Model\SuperDeparment.cs" />
-    <Compile Include="Model\Department.cs" />
-    <Compile Include="Model\Student.cs" />
-    <Compile Include="Model\University.cs" />
+    <Compile Include="Model\DepartmentModel.cs" />
+    <Compile Include="Model\StudentModel.cs" />
+    <Compile Include="Model\UniversityModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\ViewInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AData\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

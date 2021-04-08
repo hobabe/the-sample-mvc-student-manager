@@ -6,27 +6,22 @@ using System.Threading.Tasks;
 
 namespace StudentManager
 {
-    class SuperDeparment : University
+    class SuperDeparment : UniversityModel
     {
         private string name;
 
 
-        private List<Class> classes = new List<Class>();
+        private List<ClassModel> classes = new List<ClassModel>();
 
-        public string Name { get => name; set => name = value; }
-        internal List<Class> Classes { get => classes; set => classes = value; }
+        public string Name { get => name ; set => name = value; }
+        internal List<ClassModel> Classes { get => classes; set => classes = value; }
 
 
-        public List<Student> ShowImportantInfTop10Depament()
+        public List<StudentModel> ShowImportantInfTop10Depament()
         {
             /// name
             
             return null;
-        }
-
-        public override void TryAbstract(int year)
-        {
-            Console.WriteLine("Super Department work from "+ year);
         }
     }
 }

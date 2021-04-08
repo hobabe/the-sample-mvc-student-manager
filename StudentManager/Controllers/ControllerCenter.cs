@@ -1,4 +1,5 @@
 ﻿using StudentManager.Blo;
+using StudentManager.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,95 +10,129 @@ namespace StudentManager.Controllers
 {
     class ControllerCenter
     {
-        IStudentManagerment _studentManagerment;
-        static List<University> Universities { set; get; }
-        public ControllerCenter(StudentManagerment studentManagerment)
+        static string optionSelect = "";
+        static DataContext _dataContext;
+        static IStudentManagerment _studentManagerment;
+
+        static List<UniversityModel> Universities { set; get; }
+        public ControllerCenter()
         {
-            this._studentManagerment = studentManagerment;
+            InitComponent();
         }
 
-        public static void AddNewStudent()
+        public static void InitComponent()
         {
-            StudentControler.StartInput();
+            _studentManagerment = new StudentManagerment();
         }
 
-        public static List<Student> ShowAllStudentByClassId(int id)
+        public void InfoManagerment()
         {
-            var listStudent = StudentControler.GetListStudent(id);
+            Console.WriteLine("Type to select:" + GenerateInfoBoard());
 
-            foreach(var s in listStudent)
+            optionSelect = Console.ReadLine();
+
+            switch (optionSelect)
             {
-                s.Class_name += " [SUU NHI]";
+                case "1"://add new
+                    if (_dataContext == null)
+                    {
+                        _dataContext = new DataContext();
+                    }
+
+                    StudentModel studentModel = AddNewStudent();
+                    var de = new DepartmentModel();
+                    var cls = new ClassModel();
+
+                    cls._students = new List<StudentModel>();
+                    cls._students.Add(studentModel);
+
+                    de._classes = new List<ClassModel>();
+                    de._classes.Add(cls);
+
+                    _dataContext.
+                        UniversityModel.
+                        _departmentModels.Add(de);
+
+                        ObjectInOut.Save(_dataContext);
+                    break;
+                case "2"://update 
+                    break;
+                case "5"://update 
+                    break;
+                default:
+                    return;
             }
 
-            return listStudent;
+            Console.Clear();
+            InfoManagerment();
         }
 
-        
-
-        public static void CleanEmpty()
+        private string GenerateInfoBoard()
         {
-            foreach (University university in Universities)
+            List<string> actions = new List<string>()
             {
-                foreach (Department department in university.Departments)
-                {
-                    department.Classes.RemoveAll(x => x.Students.Count() == 0);
-                    // foreach (Class @class in department.Classes) Console.WriteLine(@class.Name + " count: " + @class.Students.Count());
-                }
-            }
-            foreach (University university in Universities)
+                "add new",
+                "update",
+                "exist",
+                "show sv",
+                ">Read data",
+                ">Save data",
+            };
+
+            int i= 1;
+            string textInfoAll = string.Empty;
+            foreach(var action in actions)
             {
-                foreach (Department department in university.Departments)
-                {
-                    department.Classes.RemoveAll(x => x.Students.Count() == 0);
-                }
+                textInfoAll += string.Format("\n{0} -> {1}", i++, action);
             }
 
-            foreach (University university in Universities)
-            {
-                university.Departments.RemoveAll(x => x.Classes.Count() == 0);
-            }
-            Universities.RemoveAll(x => x.Departments.Count() == 0);
+            return textInfoAll +"\n -------------------- \n";
         }
 
-        public static void StartInput()
+
+        #region ADD INFO
+        public static StudentModel AddNewStudent()
         {
-            Student student = new Student("Dinh Huynh Tien Phu", "19120325", 10);
-            student.Add("KHTN", "CNTT", "19CTT2");
-            Student student2 = new Student("Nguyen Anh Tuan", "19120416", 9);
-            student2.Add("KHTN", "CNTT", "19CTT2");
-            Student student3 = new Student("Doan Anh Khoi", "19120111", 5);
-            student3.Add("KHTN", "CNTT", "19CTT3");
-            Student student4 = new Student("Nguyen Thi Loan", "19120225", 10);
-            student4.Add("UIT", "CNTT", "IT_01");
-            Console.WriteLine("\n*********Khoi tao danh sach luc dau:***********\n");
+            StudentModel studentModel = new StudentModel();
+
+            studentModel.Name = InfoInput("Ten");
+            studentModel.Age = InfoInput("Tuoi");
+            studentModel.ID = InfoInput("Id");
+
+            return studentModel;
         }
 
-        public static void Remove()
+        private static string InfoInput(string field)
         {
-
-            ViewInfo.StartingUI();
-
-            var student = new Student();
-            //student4.Update(_department: "CNSH", _class: "SH_03");
-            Console.WriteLine("\n*********Sau khi thay doi nganh hoc sinh vien Nguyen Thi Loan:***********\n");
-            ViewInfo.StartingUI();
-
-
-            student.Update(_name: "Tien Phu Dep Trai Sieu Cap Vu Tru");
-            Console.WriteLine("\n***********Sau khi thay doi ten sinh vien Dinh Huynh Tien Phu:*********\n");
-            ViewInfo.StartingUI();
-
-            student.Remove();
-            Console.WriteLine("\n***********Sau khi remove sinh vien Tien Phu Dep Trai Sieu Cap Vu Tru:***********\n");
-            ViewInfo.StartingUI();
-
-            Student student5 = new Student("Tran Dac Toan", "19120400", 8);
-            //student5.Add("UIT", "CNSH", "SH_03");
-            //student4.Update(_university: "HUTECH", _department: "CNSH", _class: "SH_04");
-            //Console.WriteLine("\n*********Sau khi them Tran Dac Toan va update Nguyen Thi Loan*********\n");
-            //ViewInfo.PrintAll();
-
+            Console.WriteLine("Xin nhap "+ field);
+            return Console.ReadLine();
         }
+
+        private static void AddNewStudent(StudentModel studentModel)
+        {
+            _studentManagerment.Save(studentModel);
+
+            ViewInfo.NotificationSuccess(studentModel.Name);
+        }
+
+
+        #endregion
+
+        #region SHOW INFO
+
+        #endregion
+
+        public static List<StudentModel> ShowAllStudentByClassId(StudentModel studentModel)
+        {
+            //var listStudent = StudentControler.GetListStudent(id);
+
+            //foreach(var s in listStudent)
+            //{
+            //    s.Class_name += " [Add thanh cong]" + studentModel.name;
+            //}
+
+            return null;
+        }
+
     }
 }

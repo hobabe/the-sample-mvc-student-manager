@@ -1,0 +1,7 @@
+--
+1. Save data as object files:
+	+ use Serializable
+2. MVC & layers
+	+ 
+3. What's feature can do?
+	+ 

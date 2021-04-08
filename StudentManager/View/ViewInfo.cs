@@ -9,42 +9,41 @@ namespace StudentManager
 {
     class ViewInfo
     {
-        private static List<University> universities = new List<University>();
+        private static List<UniversityModel> universities = new List<UniversityModel>();
 
-        internal static List<University> Universities { get => universities; set => universities = value; }
+        internal static List<UniversityModel> Universities { get => universities; set => universities = value; }
 
         public static void StartingUI() {
-            Department department = new Department();
+            DepartmentModel department = new DepartmentModel();
             SuperDeparment superDepartment = new SuperDeparment();
 
-            department.TryAbstract(2018);
-            superDepartment.TryAbstract(2018);
 
             Console.ReadKey();
         }
 
-        public static void AddNew()
+        public static void Add()
         {
-            ControllerCenter.AddNewStudent();
+            Console.WriteLine("Starting add new sinh vien");
+        }
 
+        public static string NotificationSuccess(string name)
+        {
+            return "Add thanh cong sv:" + name;
         }
 
         public static void ShowAllStudent(int idUniversity)
         {
-            var list = ControllerCenter.ShowAllStudentByClassId(idUniversity);
+            var list = ControllerCenter.ShowAllStudentByClassId(null);
             foreach(var s in list)
             {
                 ShowCommon(s);
 
-                //show top 10|| kinh doanh, 
-                s.GetTop10Student();
-                s.GetTop10Depament();
             }
         }
 
-        private static void ShowCommon(Student student)
+        private static void ShowCommon(StudentModel student)
         {
-            Console.WriteLine("      #" + student.Name + " " + student.ID1 + " " + student.Score);
         }
+
     }
 }
